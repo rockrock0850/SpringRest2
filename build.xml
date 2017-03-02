@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="clean" name="SpringRest">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../"/>
+    <property name="project.home" value="${ECLIPSE_HOME}workspace/SpringRest/"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+    
+    <path id="Apache Tomcat v8.0 [Apache Tomcat v8.0].libraryclasspath">
+        <pathelement location="../../../apache-tomcat-8.0.32/lib/*.jar"/>
+    </path>
+    <path id="Web App Libraries.libraryclasspath">
+        <pathelement location="${ECLIPSE_HOME}workspace/SpringRest/WebContent/WEB-INF/lib/*.jar"/>
+    </path>
+    <path id="EAR Libraries.libraryclasspath"/>
+    <path id="JUnit 4.libraryclasspath">
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+    </path>
+    <path id="SpringRest.classpath">
+        <pathelement location="build/classes"/>
+        <path refid="Apache Tomcat v8.0 [Apache Tomcat v8.0].libraryclasspath"/>
+        <path refid="Web App Libraries.libraryclasspath"/>
+        <path refid="EAR Libraries.libraryclasspath"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+    </path>
+    <target name="clean">
+        <delete dir="${project.home}wars"/>
+        <delete dir="WebContent/WEB-INF/classes"/>
+    </target>
+    <target depends="clean" name="compile">
+        <mkdir dir="build/classes" />
+        <javac debug="true" debuglevel="${debuglevel}" destdir="build/classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <src path="properties"/>
+            <src path="configs"/>
+            <classpath refid="SpringRest.classpath"/>
+        </javac>
+		<mkdir dir="WebContent/WEB-INF/classes" />
+		<copy includeemptydirs="false" todir="WebContent/WEB-INF/classes">
+		    <fileset dir="build/classes">
+				<include name="**/*.*"/>
+			</fileset>
+			<globmapper from="*-uat.properties" to="*.properties"/>
+		</copy>
+		<copy includeemptydirs="false" todir="WebContent/WEB-INF/classes">
+		    <fileset dir="build/classes">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+    </target>
+    <target depends="compile" name="uat">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <jar destfile="${ant.project.name}.war">
+		    <zipfileset dir="WebContent/">
+		        <include name="**/*.*" />
+		        <exclude name="**/*.war" />
+		    </zipfileset>
+		</jar>
+		<move file="${ant.project.name}.war" todir="${project.home}wars" />
+    	<delete dir="WebContent/WEB-INF/classes"/>
+    </target>
+</project>
