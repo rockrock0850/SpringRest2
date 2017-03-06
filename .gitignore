@@ -1,6 +1,11 @@
 build/
+
 src/.gitignore
-.setting/
+
+.settings/
+
 .project
+
 .tern-project
+
 .classpath
