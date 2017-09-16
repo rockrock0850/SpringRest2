@@ -25,7 +25,8 @@ public class Constant {
 	public final static String USER_CREATE = "user/user-create";
 	public final static String USER_UPDATE = "user/user-update";
 	public final static String USER_DELETE = "user/user-delete";
-	public final static String BOOTSTRAP_DEMO = "bootstrap/bootstrap_demo";
+	public final static String BOOTSTRAP_DEMO = "demo/bootstrap";
+	public final static String IMAGE_DEMO = "demo/image";
 	
 	/*
 	 * 系統狀態
